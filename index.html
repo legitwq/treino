@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔥 FULL BODY PRO BY LEO</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a);
+    color:white;
+}
+
+header{
+    text-align:center;
+    padding:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    padding:10px;
+}
+
+.tabs button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#1e40af;
+    color:white;
+    font-weight:bold;
+}
+
+.tabs button.active{
+    background:#3b82f6;
+}
+
+.workout{
+    display:none;
+    padding:15px;
+}
+
+.workout.active{
+    display:block;
+}
+
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+h3{
+    color:#60a5fa;
+}
+
+.exercise{
+    display:flex;
+    justify-content:space-between;
+    padding:10px;
+    margin:5px 0;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+}
+
+.done{
+    text-decoration:line-through;
+    opacity:0.5;
+}
+
+.timer{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#3b82f6;
+    padding:15px;
+    border-radius:50%;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>💪 FULL BODY PRO BY LEO</header>
+
+<div class="tabs">
+<button onclick="show('A',this)" class="active">SEGUNDA</button>
+<button onclick="show('B',this)">QUARTA</button>
+<button onclick="show('C',this)">SEXTA</button>
+</div>
+
+<div id="A" class="workout active"></div>
+<div id="B" class="workout"></div>
+<div id="C" class="workout"></div>
+
+<div class="timer" onclick="timer()">⏱️</div>
+
+<script>
+
+const treinos = {
+
+A: {
+"🏋️ Costas":[
+["Remada baixa com triângulo","4x8"],
+["Puxada alta na polia pronada","3x8"],
+["Serrote unilateral","4x8"]
+],
+
+"🏋️ Peito":[
+["Supino inclinado com halteres","3x8"],
+["Crucifixo padrão","3x10"],
+["Supino reto máquina","2x12"]
+],
+
+"💪 Bíceps":[
+["Rosca direta barra W","2x10"],
+["Rosca inclinada halteres","3x8"],
+["Rosca alternada","3x8"]
+],
+
+"🔥 Tríceps":[
+["Tríceps testa halter","2x10"],
+["Tríceps corda","3x8"]
+],
+
+"🦵 Pernas":[
+["Cadeira extensora","2x8 + 1x6"],
+["Posterior deitado","2x12"]
+],
+
+"🦵 Panturrilha":[
+["Panturrilha máquina","3x8"]
+],
+
+"🏋️ Ombro":[
+["Elevação lateral","3x10"]
+],
+
+"🧠 Abdômen":[
+["Abdominal curtinho","3x6"],
+["Russian twist","2x40"],
+["Abdominal pernas suspensas","3x10"],
+["Prancha","2x ATE A falha"],
+["Abdominal normal","3x15"]
+]
+},
+
+B: {
+"🏋️ Costas":[
+["Puxada com triângulo","3x10"],
+["Crucifixo inverso","2x10"],
+["Remada cavalinho","4x6"]
+],
+
+"🏋️ Peito":[
+["Supino inclinado máquina","2x12 + 1x8"],
+["Crucifixo pesado","2x8 + 1x5"],
+["Supino máquina","2x12"]
+],
+
+"💪 Bíceps":[
+["Rosca Scott barra W no banco ","3x8 com 5 segundos de descida"],
+["Rosca na polia","2x12"],
+["Bíceps corda com rotação","3x8"]
+],
+
+"🔥 Tríceps":[
+["Tríceps barra W","3x8"],
+["Tríceps francês na polia","2x10"]
+],
+
+"🦵 Pernas":[
+["Cadeira adutora","3x10"],
+["Cadeira abdutora","3x8"]
+],
+
+"🦵 Panturrilha":[
+["Panturrilha em normal","3x10"]
+],
+
+"🏋️ Ombro":[
+["Elevação na polia","2x6"]
+],
+
+"🧠 Abdômen":[
+["Russian twist","2x40"],
+["Abdominal normal","3x15"],
+["Prancha","2x falha"],
+["Abdominal curtinho","3x6"],
+["Abdominal elevador","2x15"]
+]
+},
+
+C: {
+"🏋️ Costas":[
+["Remada baixa com triângulo","4x8"],
+["Puxada alta pronada","3x8"],
+["Remada cavalinho","4x6"]
+],
+
+"🏋️ Peito":[
+["Supino inclinado halteres","3x8"],
+["Crucifixo padrão","3x10"],
+["Supino máquina","2x12"]
+],
+
+"💪 Bíceps":[
+["Rosca direta barra reta","2x10"],
+["Rosca inclinada","3x8"],
+["Rosca alternada","3x8"]
+],
+
+"🔥 Tríceps":[
+["Tríceps corda","3x8"],
+["Tríceps testa","2x10"]
+],
+
+"🦵 Pernas":[
+["Posterior unilateral","2x10"],
+["Cadeira extensora","2x8 + 1x6"]
+],
+
+"🦵 Panturrilha":[
+["Panturrilha máquina","3x10"]
+],
+
+"🏋️ Ombro":[
+["Elevação lateral","3x10"]
+],
+
+"🧠 Abdômen":[
+["Abdominal pernas suspensas","3x10"],
+["Russian twist","2x40"],
+["Abdominal normal","3x15"],
+["Prancha","2x falha"],
+["Abdominal elevador","2x15"]
+]
+}
+
+};
+
+function render(){
+    Object.keys(treinos).forEach(dia=>{
+        let html="";
+        Object.keys(treinos[dia]).forEach(grupo=>{
+            html+=`<div class="card"><h3>${grupo}</h3>`;
+            treinos[dia][grupo].forEach((ex,i)=>{
+                let key=dia+grupo+i;
+                let done=localStorage.getItem(key)=="1"?"done":"";
+                html+=`
+                <div class="exercise ${done}" onclick="toggle('${key}',this)">
+                    <span>${ex[0]}</span>
+                    <span>${ex[1]}</span>
+                </div>`;
+            });
+            html+="</div>";
+        });
+        document.getElementById(dia).innerHTML=html;
+    });
+}
+
+function toggle(key,el){
+    el.classList.toggle("done");
+    localStorage.setItem(key, el.classList.contains("done")?1:0);
+}
+
+function show(dia,btn){
+    document.querySelectorAll('.workout').forEach(e=>e.classList.remove('active'));
+    document.getElementById(dia).classList.add('active');
+
+    document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+let t=0,rodando=false;
+
+function timer(){
+    if(rodando)return;
+    rodando=true;
+    t=30;
+
+    let i=setInterval(()=>{
+        document.querySelector('.timer').innerText=t;
+        if(t<=0){
+            clearInterval(i);
+            rodando=false;
+            document.querySelector('.timer').innerText="⏱️";
+        }
+        t--;
+    },1000);
+}
+
+render();
+
+</script>
+
+</body>
+</html>
